@@ -4,7 +4,7 @@ import { View, Text, Modal, Pressable, StyleSheet } from 'react-native'
 interface EmojiPickerProps {
   isVisible: boolean
   onClose: () => void
-  children: React.ReactNode
+  children: any
 }
 
 export default function EmojiPicker({ isVisible, onClose, children }: EmojiPickerProps) {
@@ -17,6 +17,7 @@ export default function EmojiPicker({ isVisible, onClose, children }: EmojiPicke
             <MaterialIcons name='close' color='#FFFFFF' size={22} />
           </Pressable>
         </View>
+        {children}
       </View>
     </Modal>
   )
