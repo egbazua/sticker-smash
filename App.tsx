@@ -6,12 +6,16 @@ import ImageViewer from './components/ImageViewer'
 import Button from './components/Button'
 import CircleButton from './components/CircleButton'
 import IconButton from './components/IconButton'
+import EmojiPicker from './components/EmojiPicker'
+import EmojiList from './components/EmojiList'
 
 const PlaceholderImage = require('./assets/images/background-image.png')
 
 export default function App() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false)
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
+  const [pickedEmoji, setPickedEmoji] = useState(null)
 
   const pickImageAsync = async (): Promise<void> => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -31,13 +35,15 @@ export default function App() {
     setShowAppOptions(false)
   }
 
-  const onAddSticker = () => {
-
+  const onAddSticker = (): void => {
+    setIsModalVisible(true)
   }
 
   const onSaveImageAsync = async (): Promise<void> => {
 
   }
+
+  const onModalClose = (): void => setIsModalVisible(false)
 
   return (
     <View style={styles.container}>
@@ -60,6 +66,9 @@ export default function App() {
           </View>
         )
       }
+      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+        <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} /> 
+      </EmojiPicker>
       <StatusBar style="auto" />
     </View>
   )
