@@ -32,9 +32,7 @@ export default function EmojiList({ onSelect, onCloseModal }: EmojiListProps) {
           <Image source={item} key={index} style={styles.image} />
         </Pressable>
       )}
-    >
-
-    </FlatList>
+    />
   )
 }
 
