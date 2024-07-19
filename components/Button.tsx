@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 
-export default function Button({ label }: { label: string }) {
+export default function Button({ label }: Readonly<{ label: string }>) {
   return (
     <View style={styles.buttonContainer}>
       <Pressable style={styles.button} onPress={() => alert('You pressed a button.')}>
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
   },
   buttonIcon: {
