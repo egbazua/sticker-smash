@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker'
 import * as MediaLibrary from 'expo-media-library'
 import domtoimage from 'dom-to-image'
 import { captureRef } from 'react-native-view-shot'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Platform } from 'react-native'
 import ImageViewer from './components/ImageViewer'
 import Button from './components/Button'
 import CircleButton from './components/CircleButton'
@@ -45,17 +45,34 @@ export default function App() {
   const onAddSticker = (): void => setIsModalVisible(true)
 
   const onSaveImageAsync = async (): Promise<void> => {
-    try {
-      const localUri = await captureRef(imageRef, {
-        height: 440,
-        quality: 1,
-      })
+    if (Platform.OS !== 'web') {
+      try {
+        const localUri = await captureRef(imageRef, {
+          height: 440,
+          quality: 1,
+        })
+  
+        await MediaLibrary.saveToLibraryAsync(localUri)
+  
+        if (localUri) alert("Saved!")
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      try {
+        const dataUrl = await domtoimage.toJpeg(imageRef.current as any, {
+          quality: 0.95,
+          width: 320,
+          height: 440,
+        })
 
-      await MediaLibrary.saveToLibraryAsync(localUri)
-
-      if (localUri) alert("Saved!")
-    } catch (error) {
-      console.log(error)
+        const link = document.createElement('a')
+        link.download = 'sticker-smash.jpeg'
+        link.href = dataUrl
+        link.click()
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
