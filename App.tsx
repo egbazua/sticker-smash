@@ -40,7 +40,10 @@ export default function App() {
     }
   }
 
-  const onReset = (): void => setShowAppOptions(false)
+  const onReset = (): void => {
+    setShowAppOptions(false)
+    setPickedEmoji(null)
+  }
 
   const onAddSticker = (): void => setIsModalVisible(true)
 
